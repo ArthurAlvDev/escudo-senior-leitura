@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
+  <title>Escudo Sênior — golpe, pressão e mensagem difícil em linguagem simples</title>
+  <meta name="description" content="Ferramenta gratuita e local que explica, em linguagem simples, se uma mensagem parece golpe: pressa, ameaça, pedido de Pix, código, senha ou link suspeito. Nada é enviado.">
+  <meta property="og:title" content="Escudo Sênior">
+  <meta property="og:description" content="Cole a mensagem e entenda, em palavras simples, o que ela está tentando fazer com você.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d4b3a'/%3E%3Cpath d='M16 5l9 4v8c0 6-4 9-9 11-5-2-9-5-9-11V9z' fill='%23bfe8cf'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <script defer src="src/patterns.js"></script>
+  <script defer src="src/analyze.js"></script>
+  <script defer src="src/explain.js"></script>
+  <script defer src="src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Ir para o conteúdo</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🛡️</span>
+      <div>
+        <h1>Escudo Sênior</h1>
+        <p class="tagline">Entenda a mensagem antes de responder, clicar ou pagar</p>
+      </div>
+    </div>
+    <span class="privacy">100% local · nada é enviado</span>
+  </header>
+
+  <main id="main">
+    <section class="card" aria-labelledby="input-title">
+      <h2 id="input-title">1. Cole a mensagem</h2>
+      <p class="muted">
+        Pode ser SMS, WhatsApp, e-mail ou um anúncio. Copie o texto e cole aqui.
+        Não apagamos nada e não enviamos nada para a internet.
+      </p>
+
+      <label for="source">Mensagem recebida</label>
+      <textarea id="source" rows="8" spellcheck="false" placeholder="Cole aqui a mensagem que você recebeu..."></textarea>
+
+      <div class="row wrap">
+        <button type="button" id="btn-analyze" class="primary big">Analisar mensagem</button>
+        <button type="button" id="btn-clear" class="ghost">Limpar</button>
+      </div>
+
+      <p class="muted small">Não sabe o que colar? Experimente um exemplo:</p>
+      <div class="row wrap">
+        <button type="button" class="chip" data-sample="banco">Mensagem de banco</button>
+        <button type="button" class="chip" data-sample="parente">Falso parente</button>
+        <button type="button" class="chip" data-sample="normal">Mensagem comum</button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite" data-kind="info"></p>
+    </section>
+
+    <section id="results" hidden>
+      <section class="card risk-card" aria-labelledby="risk-title">
+        <h2 id="risk-title">2. Resultado</h2>
+
+        <div id="risk-banner" class="risk-banner" data-level="baixo">
+          <p id="risk-headline" class="risk-headline">—</p>
+          <div class="meter-wrap">
+            <div class="meter" role="meter" id="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Nível de risco">
+              <span id="meter-fill" class="meter-fill"></span>
+            </div>
+            <p class="meter-legend">
+              <span id="risk-score">0</span>/100 · risco <strong id="risk-level">baixo</strong>
+            </p>
+          </div>
+        </div>
+
+        <h3>Em linguagem simples</h3>
+        <p id="summary" class="summary"></p>
+      </section>
+
+      <section class="card" aria-labelledby="signals-title">
+        <h2 id="signals-title">3. O que encontramos</h2>
+        <p class="muted small">Cada item explica o motivo. A ordem vai do mais grave para o menos grave.</p>
+        <ul id="findings" class="findings"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="todo-title">
+        <h2 id="todo-title">4. O que fazer agora</h2>
+        <ul id="checklist" class="checklist"></ul>
+
+        <h3>Se quiser responder</h3>
+        <p id="reply" class="reply"></p>
+        <div class="row wrap">
+          <button type="button" id="btn-copy-reply" class="ghost">Copiar resposta</button>
+          <button type="button" id="btn-report" class="ghost">Baixar relatório .md</button>
+          <button type="button" id="btn-print" class="ghost">Imprimir</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="card prose" aria-labelledby="help-title">
+      <h2 id="help-title">Regras que valem sempre</h2>
+      <ul>
+        <li>Banco, governo e empresa séria <strong>não pedem senha, código de SMS ou dados do cartão</strong>.</li>
+        <li><strong>Pressa é ferramenta de golpe.</strong> Ninguém precisa da sua decisão em cinco minutos.</li>
+        <li><strong>Pix para desconhecido não volta.</strong> Confirme por telefone, no número antigo da pessoa.</li>
+        <li>Antes de pagar, <strong>conte para alguém</strong>. Golpe gosta de segredo.</li>
+        <li>Na dúvida, procure a agência, o site oficial digitado por você ou ligue para o número do seu cartão.</li>
+      </ul>
+      <p class="muted small">
+        Esta ferramenta aponta sinais conhecidos. Ela não garante que uma mensagem seja segura:
+        golpes novos aparecem todos os dias.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Feito para quem quer entender a mensagem antes de decidir.</p>
+    <p class="muted small">Made by OlacDev · <a href="https://olacdev.com/" rel="noopener">olacdev.com</a></p>
+  </footer>
+</body>
+</html>
