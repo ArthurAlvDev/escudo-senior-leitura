@@ -37,6 +37,7 @@
 
     renderRisk(result);
     renderSummary(result);
+    renderSemaforo(source);
     renderFindings(result);
     renderChecklist(result);
     $('reply').textContent = PlainExplain.safeReply(result);
@@ -69,6 +70,22 @@
 
   function renderSummary(result) {
     $('summary').textContent = PlainExplain.summary(result);
+  }
+
+  function renderSemaforo(source) {
+    if (typeof SemaforoAntiGolpe === 'undefined') return;
+    const sem = SemaforoAntiGolpe.analyzeMessage(source);
+    const lightEl = $('semaforo-light');
+    const reasonsEl = $('semaforo-reasons');
+    if (lightEl) lightEl.textContent = sem.light;
+    if (reasonsEl) {
+      reasonsEl.textContent = '';
+      sem.reasons.forEach((reason) => {
+        const li = document.createElement('li');
+        li.textContent = reason;
+        reasonsEl.appendChild(li);
+      });
+    }
   }
 
   function renderFindings(result) {

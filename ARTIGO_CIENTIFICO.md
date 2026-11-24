@@ -63,9 +63,9 @@ Resultado em três camadas: banner de risco com barra (`role="meter"`, `aria-val
 
 | Arquivo | Foco | Testes |
 | --- | --- | --- |
-| `analyze.test.js` | regras, pontuação, pisos, links, estrutura, níveis | 22 |
+| `analyze.test.js` | regras, pontuação, pisos, links, estrutura, níveis | 21 |
 | `explain.test.js` | título, resumo, checklist condicional, resposta, relatório | 20 |
-| `page.test.js` | integridade, rótulos, CSP, `role="meter"`, amostras, tipografia | 10 |
+| `page.test.js` | integridade, rótulos, CSP, `role="meter"`, amostras, tipografia | 11 |
 
 Resultado: **52 testes, 52 aprovados, 0 falhas**.
 

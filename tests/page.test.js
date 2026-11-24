@@ -23,7 +23,7 @@ test('tem estrutura semântica com um único h1', () => {
 test('referências locais existem', () => {
   const refs = [...html.matchAll(/(?:href|src)="([^"#]+)"/g)]
     .map((m) => m[1])
-    .filter((r) => !/^https?:|^data:/.test(r));
+    .filter((r) => !/^https?:|^data:|^\/_vercel\//.test(r));
   assert.ok(refs.length >= 5);
   for (const ref of refs) assert.ok(fs.existsSync(path.join(root, ref)), `ausente: ${ref}`);
 });
@@ -79,4 +79,15 @@ test('as três mensagens de exemplo produzem os níveis esperados', () => {
 
 test('a página não promete segurança garantida', () => {
   assert.match(html, /não garante que uma mensagem seja segura|Não garante que uma mensagem seja segura/i);
+});
+
+
+test('incorpora Semáforo Anti-Golpe, Vercel Insights e sitemap.xml', () => {
+  assert.match(html, /Semáforo Anti-Golpe/);
+  assert.match(html, /\/_vercel\/insights\/script\.js/);
+  assert.match(html, /src\/semaforo\.js/);
+  const semaforo = require('../src/semaforo.js');
+  assert.equal(semaforo.analyzeMessage('Oi mãe, mudei de número, Pix urgente!').light, 'VERMELHO');
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  assert.match(sitemap, /https:\/\/escudo\.olacdev\.com\//);
 });
